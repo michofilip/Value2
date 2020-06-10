@@ -2,12 +2,13 @@ package value.basic
 
 import org.scalatest.funsuite.AnyFunSuite
 import value.ValueContext
-import value.basic.IntValue.{IntConstant, IntNull}
+import value.ValueImplicits._
+import value.basic.IntValue.IntNull
 
 class IntValueTest extends AnyFunSuite {
     implicit private val valueContext: ValueContext = new ValueContext {}
 
-    test("IntNull should get None") {
+    test("IntValue IntNull should get None") {
         // given
         val v = IntNull
 
@@ -15,17 +16,17 @@ class IntValueTest extends AnyFunSuite {
         assertResult(None)(v.get)
     }
 
-    test("IntConstant(3) should get Some(3)") {
+    test("IntValue 3 should get Some(3)") {
         // given
-        val v = IntConstant(3)
+        val v = 3.toValue
 
         // then
         assertResult(Some(3))(v.get)
     }
 
-    test("-IntConstant(3) should get Some(-3)") {
+    test("IntValue -3 should get Some(-3)") {
         // given
-        val v = IntConstant(3)
+        val v = 3.toValue
 
         // when
         val result = -v
@@ -34,7 +35,7 @@ class IntValueTest extends AnyFunSuite {
         assertResult(Some(-3))(result.get)
     }
 
-    test("-IntNull should get None") {
+    test("IntValue -IntNull should get None") {
         // given
         val v = IntNull
 
@@ -45,10 +46,10 @@ class IntValueTest extends AnyFunSuite {
         assertResult(None)(result.get)
     }
 
-    test("IntConstant(2) + IntConstant(3) should get Some(5)") {
+    test("IntValue 2 + 3 should get Some(5)") {
         // given
-        val v1 = IntConstant(2)
-        val v2 = IntConstant(3)
+        val v1 = 2.toValue
+        val v2 = 3.toValue
 
         // when
         val result = v1 + v2
@@ -57,9 +58,9 @@ class IntValueTest extends AnyFunSuite {
         assertResult(Some(5))(result.get)
     }
 
-    test("IntConstant(2) + IntNull should get None") {
+    test("IntValue 2 + IntNull should get None") {
         // given
-        val v1 = IntConstant(2)
+        val v1 = 2.toValue
         val v2 = IntNull
 
         // when
@@ -69,10 +70,10 @@ class IntValueTest extends AnyFunSuite {
         assertResult(None)(result.get)
     }
 
-    test("IntConstant(2) - IntConstant(3) should get Some(-1)") {
+    test("IntValue 2 - 3 should get Some(-1)") {
         // given
-        val v1 = IntConstant(2)
-        val v2 = IntConstant(3)
+        val v1 = 2.toValue
+        val v2 = 3.toValue
 
         // when
         val result = v1 - v2
@@ -81,9 +82,9 @@ class IntValueTest extends AnyFunSuite {
         assertResult(Some(-1))(result.get)
     }
 
-    test("IntConstant(2) - IntNull should get None") {
+    test("IntValue 2 - IntNull should get None") {
         // given
-        val v1 = IntConstant(2)
+        val v1 = 2.toValue
         val v2 = IntNull
 
         // when
@@ -93,10 +94,10 @@ class IntValueTest extends AnyFunSuite {
         assertResult(None)(result.get)
     }
 
-    test("IntConstant(2) * IntConstant(3) should get Some(6)") {
+    test("IntValue 2 * 3 should get Some(6)") {
         // given
-        val v1 = IntConstant(2)
-        val v2 = IntConstant(3)
+        val v1 = 2.toValue
+        val v2 = 3.toValue
 
         // when
         val result = v1 * v2
@@ -105,9 +106,9 @@ class IntValueTest extends AnyFunSuite {
         assertResult(Some(6))(result.get)
     }
 
-    test("IntConstant(2) * IntNull should get None") {
+    test("IntValue 2 * IntNull should get None") {
         // given
-        val v1 = IntConstant(2)
+        val v1 = 2.toValue
         val v2 = IntNull
 
         // when
@@ -117,10 +118,10 @@ class IntValueTest extends AnyFunSuite {
         assertResult(None)(result.get)
     }
 
-    test("IntConstant(6) / IntConstant(2) should get Some(3)") {
+    test("IntValue 6 / 2 should get Some(3)") {
         // given
-        val v1 = IntConstant(6)
-        val v2 = IntConstant(2)
+        val v1 = 6.toValue
+        val v2 = 2.toValue
 
         // when
         val result = v1 / v2
@@ -129,10 +130,10 @@ class IntValueTest extends AnyFunSuite {
         assertResult(Some(3))(result.get)
     }
 
-    test("IntConstant(6) / IntConstant(4) should get Some(1)") {
+    test("IntValue 6 / 4 should get Some(1)") {
         // given
-        val v1 = IntConstant(6)
-        val v2 = IntConstant(4)
+        val v1 = 6.toValue
+        val v2 = 4.toValue
 
         // when
         val result = v1 / v2
@@ -141,10 +142,10 @@ class IntValueTest extends AnyFunSuite {
         assertResult(Some(1))(result.get)
     }
 
-    test("IntConstant(6) / IntConstant(0) should get None") {
+    test("IntValue 6 / 0 should get None") {
         // given
-        val v1 = IntConstant(6)
-        val v2 = IntConstant(0)
+        val v1 = 6.toValue
+        val v2 = 0.toValue
 
         // when
         val result = v1 / v2
@@ -153,9 +154,9 @@ class IntValueTest extends AnyFunSuite {
         assertResult(None)(result.get)
     }
 
-    test("IntConstant(6) / IntNull should get None") {
+    test("IntValue 6 / IntNull should get None") {
         // given
-        val v1 = IntConstant(6)
+        val v1 = 6.toValue
         val v2 = IntNull
 
         // when
@@ -165,10 +166,10 @@ class IntValueTest extends AnyFunSuite {
         assertResult(None)(result.get)
     }
 
-    test("IntConstant(3) % IntConstant(2) should get Some(1)") {
+    test("IntValue 3 % 2 should get Some(1)") {
         // given
-        val v1 = IntConstant(3)
-        val v2 = IntConstant(2)
+        val v1 = 3.toValue
+        val v2 = 2.toValue
 
         // when
         val result = v1 % v2
@@ -177,10 +178,10 @@ class IntValueTest extends AnyFunSuite {
         assertResult(Some(1))(result.get)
     }
 
-    test("IntConstant(3) % IntConstant(0) should get None") {
+    test("IntValue 3 % 0 should get None") {
         // given
-        val v1 = IntConstant(3)
-        val v2 = IntConstant(0)
+        val v1 = 3.toValue
+        val v2 = 0.toValue
 
         // when
         val result = v1 % v2
@@ -189,9 +190,9 @@ class IntValueTest extends AnyFunSuite {
         assertResult(None)(result.get)
     }
 
-    test("IntConstant(3) % IntNull should get None") {
+    test("IntValue 3 % IntNull should get None") {
         // given
-        val v1 = IntConstant(3)
+        val v1 = 3.toValue
         val v2 = IntNull
 
         // when
@@ -199,6 +200,14 @@ class IntValueTest extends AnyFunSuite {
 
         // then
         assertResult(None)(result.get)
+    }
+
+    test("IntValue (2 * (9 + 5)) % 10 should get Some(8)") {
+        // given
+        val v = (2.toValue * (9.toValue + 5)) % 10
+
+        // then
+        assertResult(Some(8))(v.get)
     }
 
 }
