@@ -210,4 +210,12 @@ class IntValueTest extends AnyFunSuite {
         assertResult(Some(8))(v.get)
     }
 
+    test("IntValue 3.14 toInt should get Some(8)") {
+        // given
+        val v = 3.14.toValue.toIntValue
+
+        // then
+        assertResult(Some(3))(v.get)
+    }
+
 }
